@@ -12,14 +12,17 @@ class DjController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function build() {
-
-    $build['content'] = [
+  public function myPage() {
+    $form = \Drupal::formBuilder()->getForm('Drupal\dj\Form\DjForm');
+    $myPage['content'] = [
       '#type' => 'item',
       '#markup' => $this->t('Hello! You can add here a photo of your cat'),
     ];
+    $myPage['form'] = $form;
 
-    return $build;
+    return $myPage;
   }
 
 }
+
+

@@ -1,7 +1,8 @@
 dj.cats:
   path: '/dj/cats'
   defaults:
+    _form: '\Drupal\dj\Form\DjForm'
     _title: 'All Cats'
-    _controller: '\Drupal\dj\Controller\DjController::build'
+    _controller: '\Drupal\dj\Controller\DjController::myPage'
   requirements:
     _permission: 'access content'
