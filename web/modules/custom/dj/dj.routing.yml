@@ -1,0 +1,7 @@
+dj.cats:
+  path: '/dj/cats'
+  defaults:
+    _title: 'All Cats'
+    _controller: '\Drupal\dj\Controller\DjController::build'
+  requirements:
+    _permission: 'access content'
