@@ -2,16 +2,8 @@ dj.cats:
   path: '/dj/cats'
   defaults:
     _form: '\Drupal\dj\Form\DjForm'
-    _title: 'All Cats'
+    _title: 'Hello! You can add here a photo of your cat'
     _controller: '\Drupal\dj\Controller\DjController::myPage'
   requirements:
     _permission: 'access content'
 
-
-dj.cats.ajaxdjcat:
-  path: '/dj-ajax'
-  defaults:
-    _form: '\Drupal\dj\Form\AjaxDjCat'
-    _title: 'All Cats'
-  requirements:
-    _permission: 'access content'

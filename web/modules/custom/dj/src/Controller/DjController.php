@@ -16,7 +16,7 @@ class DjController extends ControllerBase {
     $form = \Drupal::formBuilder()->getForm('Drupal\dj\Form\DjForm');
     $myPage['content'] = [
       '#type' => 'item',
-      '#markup' => $this->t('Hello! You can add here a photo of your cat'),
+      '#markup' => $this->t('All Cats'),
     ];
     $myPage['form'] = $form;
 
