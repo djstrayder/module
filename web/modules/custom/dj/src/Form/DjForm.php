@@ -44,6 +44,18 @@ class DjForm extends FormBase {
         'event' => 'change',
       ],
     ];
+    $form['image_field'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Add a photo of your cat'),
+      '#required' => TRUE,
+      '#upload_location' => 'public://',
+      '#multiple' => TRUE,
+      '#default_value' => '',
+      '#upload_validators' => [
+        'file_validate_extensions' => ['jpeg jpg png'],
+        'file_validate_size' => ['2097152'],
+      ],
+    ];
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
       '#type' => 'submit',
