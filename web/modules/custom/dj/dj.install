@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Install, custom dj module.
+ */
+
+/**
+ * {@inheritDoc}
+ */
+function dj_schema() {
+  $schema['dj'] = [
+    'description' => 'Database DJ',
+    'fields' => [
+      'id' => [
+        'description' => 'ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'uid' => [
+        'description' => 'UID user',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'cat_name' => [
+        'description' => 'Your cat’s name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ],
+      'email' => [
+        'description' => 'Your email',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ],
+      'image' => [
+        'description' => 'photo of your cat',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ],
+      'timestamp' => [
+        'description' => 'Timestamp',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function dj_uninstall() {
+  \Drupal::state()->delete('dj.dj');
+}
