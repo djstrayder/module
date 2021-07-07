@@ -41,10 +41,10 @@ function dj_schema() {
       ],
       'image' => [
         'description' => 'photo of your cat',
-        'type' => 'varchar',
-        'length' => 255,
+        'type' => 'int',
+        'unsigned' => TRUE,
         'not null' => FALSE,
-        'default' => '',
+        'default' => 0,
       ],
       'timestamp' => [
         'description' => 'Timestamp',
