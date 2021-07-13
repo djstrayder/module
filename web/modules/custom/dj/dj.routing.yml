@@ -7,3 +7,10 @@ dj.cats:
   requirements:
     _permission: 'access content'
 
+dj.getCatsList:
+  path: '/catslist'
+  defaults:
+    _title: 'Cats List'
+    _controller: '\Drupal\dj\Controller\DjController::getCatsList'
+  requirements:
+    _permission: 'access content'

@@ -6,6 +6,8 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\file\Entity\File;
+
 
 /**
  * Implements an example form.
@@ -16,7 +18,7 @@ class DjForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'example_form';
+    return 'dj_form';
   }
 
   /**
@@ -24,7 +26,7 @@ class DjForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $form['cat_name'] = [
+    $form['name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Your cat’s name:'),
       '#description' => $this->t('minimum length 2, maximum length 32'),
@@ -44,13 +46,11 @@ class DjForm extends FormBase {
         'event' => 'change',
       ],
     ];
-    $form['image_field'] = [
+    $form['image'] = [
       '#type' => 'managed_file',
       '#title' => $this->t('Add a photo of your cat'),
       '#required' => TRUE,
-      '#upload_location' => 'public://',
-      '#multiple' => TRUE,
-      '#default_value' => '',
+      '#upload_location' => 'public://images/',
       '#upload_validators' => [
         'file_validate_extensions' => ['jpeg jpg png'],
         'file_validate_size' => ['2097152'],
@@ -78,8 +78,8 @@ class DjForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $emailVl = $form_state->getValue('email');
-    if (strlen($form_state->getValue('cat_name')) < 2) {
-      $form_state->setErrorByName('cat_name', $this->t('The your name is too short. Please enter a  full name.'));
+    if (strlen($form_state->getValue('name')) < 2) {
+      $form_state->setErrorByName('name', $this->t('The your name is too short. Please enter a  full name.'));
     }
     if ((!filter_var($emailVl, FILTER_VALIDATE_EMAIL)) || (strpbrk($emailVl, '1234567890+*/!#$^&*()='))) {
       $form_state->setErrorByName('email', $this->t('The your email not correct'));
@@ -89,29 +89,9 @@ class DjForm extends FormBase {
   /**
    * Our custom Ajax.
    */
-  public function setMessage(array &$form, FormStateInterface $form_state) {
-    $response = new AjaxResponse();
-    if ($form_state->hasAnyErrors()) {
-      return $response;
-    }
-    else {
-      $response->addCommand(
-        new HtmlCommand(
-          '.result_message',
-          'Your cat’s name: ' . $form_state->getValue('cat_name') . '.<br>' .
-          'Your email: ' . $form_state->getValue('email')
-        )
-      );
-    }
-    return $response;
-  }
-
-  /**
-   * Our custom Ajax.
-   */
   public function setMessageCat(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    if (strlen($form_state->getValue('cat_name')) < 2) {
+    if (strlen($form_state->getValue('name')) < 2) {
       $response->addCommand(
         new HtmlCommand(
           '.result_message',
@@ -123,7 +103,7 @@ class DjForm extends FormBase {
       $response->addCommand(
         new HtmlCommand(
           '.result_message',
-          'Your name is: ' . $form_state->getValue('cat_name')
+          'Your name is: ' . $form_state->getValue('name')
         )
       );
     }
@@ -156,11 +136,44 @@ class DjForm extends FormBase {
   }
 
   /**
+   * Our custom Ajax.
+   */
+  public function setMessage(array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+    if ($form_state->hasAnyErrors()) {
+      return $response;
+    }
+    else {
+      $response->addCommand(
+        new HtmlCommand(
+          '.result_message',
+          'Your cat’s name: ' . $form_state->getValue('name') . '.<br>' .
+          'Your email: ' . $form_state->getValue('email')
+        )
+      );
+    }
+    return $response;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->messenger()->addStatus($this->t('Your name is @cat_name', ['@cat_name' => $form_state->getValue('cat_name')]));
+    $this->messenger()->addStatus($this->t('Your name is @name', ['@name' => $form_state->getValue('cat_name')]));
     $this->messenger()->addStatus($this->t('Your email is @email', ['@email' => $form_state->getValue('email')]));
+    $picture = $form_state->getValue('image');
+    $file = File::load($picture[0]);
+    $file->setPermanent();
+    $file->save();
+    \Drupal::database()->insert('dj')
+      ->fields(['name', 'email', 'timestamp', 'image'])
+      ->values([
+        'name' => $form_state->getValue('name'),
+        'email' => $form_state->getValue('email'),
+        'timestamp' => date('d-m-Y H:i:s', strtotime('+3 hour')),
+        'image' => $picture[0],
+      ])
+      ->execute();
   }
 
 }
