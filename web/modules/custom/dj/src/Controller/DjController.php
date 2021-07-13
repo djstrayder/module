@@ -21,7 +21,7 @@ class DjController extends ControllerBase {
     ];
     $myPage['form'] = $form;
 
-    return $myPage;
+    return [$myPage, $this->getCatsList()];
   }
 
   /**

@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\file\Entity\File;
-
+use Drupal\Core\Ajax\RedirectCommand;
 
 /**
  * Implements an example form.
@@ -140,6 +140,7 @@ class DjForm extends FormBase {
    */
   public function setMessage(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
+    $form_state->setRedirect('dj.cats');
     if ($form_state->hasAnyErrors()) {
       return $response;
     }
@@ -152,7 +153,9 @@ class DjForm extends FormBase {
         )
       );
     }
+    $response->addCommand(new RedirectCommand('/dj/cats'));
     return $response;
+
   }
 
   /**
@@ -174,6 +177,7 @@ class DjForm extends FormBase {
         'image' => $picture[0],
       ])
       ->execute();
+
   }
 
 }
