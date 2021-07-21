@@ -1,0 +1,34 @@
+.path-dj .layout-main-wrapper .js-quickedit-page-title {
+  text-align: center;
+  padding: 25px 0;
+}
+.form {
+  display: flex;
+  justify-content: center;
+}
+.form-item-name , .form-item-email , .form-item-image {
+  text-align: center;
+  padding: 5px 0;
+}
+.form-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+.cat-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  border-top: 1px solid black;
+  border-bottom: 2px solid black;
+  margin-bottom: 20px;
+}
+.cat-name, .cat-email, .cat-timestamp {
+  text-align: center;
+  align-self: center;
+}
+.cat-image {
+  padding: 15px;
+}
+tr {
+  text-align: center;
+}

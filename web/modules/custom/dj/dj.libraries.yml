@@ -1,0 +1,5 @@
+catslist-style:
+  version: 1.x
+  css:
+    theme:
+      css/catslist.css: {}

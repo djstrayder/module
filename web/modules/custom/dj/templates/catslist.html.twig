@@ -1,0 +1,17 @@
+{{ attach_library('dj/catslist-style') }}
+<div class="wrapper">
+  <div class="form">
+    {{ form }}
+  </div>
+  <div class="cat-header">
+    {{ header }}
+  </div>
+  {% for row in rows %}
+    <div class="cat-content">
+      <div class="cat-name">{{ row.name }}</div>
+      <div class="cat-email"><a href="{{ row.email }}">{{ row.email }}</a></div>
+      <div class="cat-timestamp">{{ row.timestamp |date('d-m-Y H:i:s') }}</div>
+      <div class="cat-image"><a href="{{ row.uri }}" target="_blank">{{ row.img }}</a></div>
+    </div>
+  {% endfor %}
+</div>

@@ -33,7 +33,7 @@ function dj_schema() {
         'default' => '',
       ],
       'image' => [
-        'description' => 'photo of your cat',
+        'description' => 'Photo of your cat',
         'type' => 'int',
         'length' => 64,
         'not null' => FALSE,

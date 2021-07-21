@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function dj_theme($existing, $type, $theme, $path) {
+  return [
+    'catslist' => [
+      'variables' => [
+        'form' => [],
+        'header' => [],
+        'rows' => [],
+      ],
+    ],
+  ];
+}

@@ -11,23 +11,14 @@ use Drupal\file\Entity\File;
 class DjController extends ControllerBase {
 
   /**
-   * Builds the response.
+   * Builds the Cats List.
    */
-  public function myPage() {
-    $form = \Drupal::formBuilder()->getForm('Drupal\dj\Form\DjForm');
+  public function getCatsList() {
     $myPage['content'] = [
       '#type' => 'item',
       '#markup' => $this->t('All Cats'),
     ];
-    $myPage['form'] = $form;
-
-    return [$myPage, $this->getCatsList()];
-  }
-
-  /**
-   * Builds the Cats List.
-   */
-  public function getCatsList() {
+    $form = \Drupal::formBuilder()->getForm('Drupal\dj\Form\DjForm');
     $query = \Drupal::database();
     $result = $query->select('dj', 'e')
       ->fields('e', ['name', 'email', 'image', 'timestamp'])
@@ -52,18 +43,21 @@ class DjController extends ControllerBase {
         'img' => [
           'data' => $cat_image,
         ],
+        'uri' => file_create_url($uri),
       ];
     }
 
-    $header = ['Name', 'Email', 'Image', 'Data'];
+    $header = ['Name', 'Email', 'Data', 'Image'];
 
     $build['table'] = [
       '#type' => 'table',
       '#header' => $header,
-      '#rows' => $data,
     ];
     return [
-      $build,
+      '#theme' => 'catslist',
+      '#form' => $form,
+      '#header' => $build,
+      '#rows' => $data,
     ];
   }
 
