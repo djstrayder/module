@@ -14,10 +14,6 @@ class DjController extends ControllerBase {
    * Builds the Cats List.
    */
   public function getCatsList() {
-    $myPage['content'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('All Cats'),
-    ];
     $form = \Drupal::formBuilder()->getForm('Drupal\dj\Form\DjForm');
     $query = \Drupal::database();
     $result = $query->select('dj', 'e')
@@ -25,7 +21,6 @@ class DjController extends ControllerBase {
       ->orderBy('timestamp', 'DESC')
       ->execute()->fetchAll();
     $data = [];
-
     foreach ($result as $row) {
       $file = File::load($row->image);
       $uri = $file->getFileUri();
@@ -46,9 +41,7 @@ class DjController extends ControllerBase {
         'uri' => file_create_url($uri),
       ];
     }
-
     $header = ['Name', 'Email', 'Data', 'Image'];
-
     $build['table'] = [
       '#type' => 'table',
       '#header' => $header,
