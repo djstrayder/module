@@ -12,6 +12,12 @@
       <div class="cat-email"><a href="{{ row.email }}">{{ row.email }}</a></div>
       <div class="cat-timestamp">{{ row.timestamp |date('d-m-Y H:i:s') }}</div>
       <div class="cat-image"><a href="{{ row.uri }}" target="_blank">{{ row.img }}</a></div>
+      {% if user.hasPermission('administer nodes') %}
+        <div class="cat-buttons">
+          <div class="cat-edit-btn"><a href="edit-cat/{{ row.id }}"  class="use-ajax catlink" data-dialog-type="modal" >{{ row.edit }}</a></div>
+          <div class="cat-delete-btn"><a href="delete-cat/{{ row.id}} "  class="use-ajax catlink" data-dialog-type="modal"> {{ row.delete }}</a></div>
+        </div>
+      {% endif %}
     </div>
   {% endfor %}
 </div>

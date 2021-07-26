@@ -6,3 +6,10 @@ dj.cats:
     _controller: '\Drupal\dj\Controller\DjController::getCatsList'
   requirements:
     _permission: 'access content'
+dj.DeleteCat:
+  path: '/dj/delete-cat/{cid}'
+  defaults:
+    _form: '\Drupal\dj\Form\DeleteCat'
+    _title: 'Are you sure about that?'
+  requirements:
+    _permission: 'administer site configuration'

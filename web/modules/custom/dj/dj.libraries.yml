@@ -3,3 +3,8 @@ catslist-style:
   css:
     theme:
       css/catslist.css: {}
+
+dj:
+  dependencies:
+    - core/jquery
+    - core/ajax

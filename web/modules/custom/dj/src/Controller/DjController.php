@@ -17,7 +17,7 @@ class DjController extends ControllerBase {
     $form = \Drupal::formBuilder()->getForm('Drupal\dj\Form\DjForm');
     $query = \Drupal::database();
     $result = $query->select('dj', 'e')
-      ->fields('e', ['name', 'email', 'image', 'timestamp'])
+      ->fields('e', ['id', 'name', 'email', 'image', 'timestamp'])
       ->orderBy('timestamp', 'DESC')
       ->execute()->fetchAll();
     $data = [];
@@ -35,6 +35,9 @@ class DjController extends ControllerBase {
         'name' => $row->name,
         'email' => $row->email,
         'timestamp' => $row->timestamp,
+        'id' => $row->id,
+        'edit' => 'Edit',
+        'delete' => 'Delete',
         'img' => [
           'data' => $cat_image,
         ],
