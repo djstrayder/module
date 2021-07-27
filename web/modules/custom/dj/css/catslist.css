@@ -1,4 +1,4 @@
-.path-dj .layout-main-wrapper .js-quickedit-page-title {
+#block-dj-theme-page-title {
   text-align: center;
   padding: 25px 0;
 }
@@ -19,7 +19,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   border-top: 1px solid black;
-  border-bottom: 2px solid black;
+  /*border-bottom: 2px solid black;*/
   margin-bottom: 20px;
 }
 .cat-name, .cat-email, .cat-timestamp {
@@ -31,4 +31,13 @@
 }
 tr {
   text-align: center;
+}
+.cat-buttons {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+.cat-buttons .btncat {
+  border: 1px solid white;
+  padding: 5px;
 }

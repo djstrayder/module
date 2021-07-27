@@ -155,7 +155,6 @@ class DjForm extends FormBase {
     }
     $response->addCommand(new RedirectCommand('/dj/cats'));
     return $response;
-
   }
 
   /**

@@ -9,14 +9,13 @@ use Drupal\Core\Url;
 /**
  * Class DeleteForm.
  *
- * @package Drupal\denist3r\Form
+ * @package Drupal\dj\Form
  */
 class DeleteCat extends ConfirmFormBase {
 
   /**
    * {@inheritdoc}
    */
-
   public function getFormId() {
     return 'delete_cat';
   }
@@ -26,10 +25,10 @@ class DeleteCat extends ConfirmFormBase {
    */
 
   public $cid;
+
   /**
    * {@inheritdoc}
    */
-
   public function getQuestion() {
     return t('Do you want to delete?', ['%cid' => $this->cid]);
   }
