@@ -10,6 +10,6 @@ dj.DeleteCat:
   path: '/dj/delete-cat/{cid}'
   defaults:
     _form: '\Drupal\dj\Form\DeleteCat'
-    _title: 'Are you sure about that?'
+    _title: 'Do you want delete this?'
   requirements:
     _permission: 'administer site configuration'
