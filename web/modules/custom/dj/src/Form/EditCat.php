@@ -8,29 +8,75 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\file\Entity\File;
 use Drupal\Core\Ajax\RedirectCommand;
+use Drupal\Core\Url;
 
 /**
- * Implements an dj form.
+ * Implements an Edit Form.
  */
-class DjForm extends FormBase {
+class EditCat extends FormBase {
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'dj_form';
+    return 'edit_cat';
+  }
+
+  /**
+   * ID of the item to delete.
+   *
+   * @let. this is dj.
+   */
+  protected $id;
+  /**
+   * {@inheritdoc}
+   */
+  public $cid;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCancelText() {
+    return t('Cancel');
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function getConfirmText() {
+    return t('Delete it!');
+  }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCancelUrl() {
+    return new Url('dj.cats');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getQuestion() {
+    return t('Do you want to edit %cid?', ['%cid' => $this->cid]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state, $cid = NULL) {
+    $this->id = $cid;
+    $query = \Drupal::database();
+    $data = $query->select('dj', 'e')
+      ->condition('e.id', $cid, '=')
+      ->fields('e', ['id', 'name', 'email', 'image'])
+      ->execute()->fetchAll();
     $form['name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Your cat’s name:'),
       '#description' => $this->t('minimum length 2, maximum length 32'),
       '#required' => TRUE,
+      '#default_value' => $data[0]->name,
       '#ajax' => [
         'callback' => '::setMessageCat',
         'event' => 'change',
@@ -41,6 +87,7 @@ class DjForm extends FormBase {
       '#title' => $this->t('Your email:'),
       '#description' => $this->t('the name can only contain latin letters, underscores, or hyphens.'),
       '#required' => TRUE,
+      '#default_value' => $data[0]->email,
       '#ajax' => [
         'callback' => '::setMessageEmailN',
         'event' => 'change',
@@ -50,6 +97,7 @@ class DjForm extends FormBase {
       '#type' => 'managed_file',
       '#title' => $this->t('Add a photo of your cat'),
       '#required' => TRUE,
+      '#default_value' => $data[0]->image,
       '#upload_location' => 'public://images/',
       '#upload_validators' => [
         'file_validate_extensions' => ['jpeg jpg png'],
@@ -59,8 +107,8 @@ class DjForm extends FormBase {
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Add cat'),
-      '#button_type' => 'primary',
+      '#value' => $this->t('Edit cat'),
+      '#button_type' => 'submit',
       '#ajax' => [
         'callback' => '::setMessage',
         'event' => 'click',
@@ -167,12 +215,11 @@ class DjForm extends FormBase {
     $file = File::load($picture[0]);
     $file->setPermanent();
     $file->save();
-    \Drupal::database()->insert('dj')
-      ->fields(['name', 'email', 'timestamp', 'image'])
-      ->values([
+    \Drupal::database()->update('dj')
+      ->condition('id', $this->id)
+      ->fields([
         'name' => $form_state->getValue('name'),
         'email' => $form_state->getValue('email'),
-        'timestamp' => date('d-m-Y H:i:s', strtotime('+3 hour')),
         'image' => $picture[0],
       ])
       ->execute();

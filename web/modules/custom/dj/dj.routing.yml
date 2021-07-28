@@ -13,3 +13,10 @@ dj.DeleteCat:
     _title: 'Do you want delete this?'
   requirements:
     _permission: 'administer site configuration'
+dj.EditCat:
+  path: '/dj/edit-cat/{cid}'
+  defaults:
+    _form: '\Drupal\dj\Form\EditCat'
+    _title: 'Do you want to edit this entry?'
+  requirements:
+    _permission: 'administer site configuration'
