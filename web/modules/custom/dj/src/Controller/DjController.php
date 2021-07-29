@@ -55,7 +55,6 @@ class DjController extends ControllerBase {
       '#header' => $build,
       '#rows' => $data,
     ];
-
   }
 
 }

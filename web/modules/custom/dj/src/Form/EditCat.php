@@ -8,7 +8,6 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\file\Entity\File;
 use Drupal\Core\Ajax\RedirectCommand;
-use Drupal\Core\Url;
 
 /**
  * Implements an Edit Form.
@@ -23,43 +22,13 @@ class EditCat extends FormBase {
   }
 
   /**
-   * ID of the item to delete.
-   *
-   * @let. this is dj.
+   * {@inheritdoc}
    */
   protected $id;
   /**
    * {@inheritdoc}
    */
   public $cid;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getCancelText() {
-    return t('Cancel');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getConfirmText() {
-    return t('Delete it!');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getCancelUrl() {
-    return new Url('dj.cats');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getQuestion() {
-    return t('Do you want to edit %cid?', ['%cid' => $this->cid]);
-  }
 
   /**
    * {@inheritdoc}
@@ -71,6 +40,7 @@ class EditCat extends FormBase {
       ->condition('e.id', $cid, '=')
       ->fields('e', ['id', 'name', 'email', 'image'])
       ->execute()->fetchAll();
+    $load_img = json_decode(json_encode($data), TRUE);
     $form['name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Your cat’s name:'),
@@ -97,7 +67,7 @@ class EditCat extends FormBase {
       '#type' => 'managed_file',
       '#title' => $this->t('Add a photo of your cat'),
       '#required' => TRUE,
-      '#default_value' => $data[0]->image,
+      '#default_value' => [$load_img[0]['image']],
       '#upload_location' => 'public://images/',
       '#upload_validators' => [
         'file_validate_extensions' => ['jpeg jpg png'],
