@@ -31,13 +31,13 @@ admin.DeleteCat:
   path: '/dj/admin/delete-cat/{cid}'
   defaults:
     _form: '\Drupal\dj\Form\DeleteCatAdmin'
-    _title: 'Are you sure about that?'
+    _title: 'Do you want to delete?'
   requirements:
     _permission: 'administer site configuration'
 admin.EditCat:
   path: '/dj/admin/edit-cat/{cid}'
   defaults:
     _form: '\Drupal\dj\Form\EditCatAdmin'
-    _title: 'You can edit your cat`s info there'
+    _title: 'Edit cat information'
   requirements:
     _permission: 'administer site configuration'

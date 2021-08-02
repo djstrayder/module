@@ -29,15 +29,15 @@ class DjController extends ControllerBase {
         '#uri' => $uri,
         '#alt' => 'Cat Photo',
         '#title' => 'Cat',
-        '#width' => 255,
+        '#width' => 250,
       ];
       $data[] = [
         'name' => $row->name,
         'email' => $row->email,
         'timestamp' => $row->timestamp,
         'id' => $row->id,
-        'edit' => 'Edit',
-        'delete' => 'Delete',
+        'edit' => t('Edit'),
+        'delete' => t('Delete'),
         'img' => [
           'data' => $cat_image,
         ],

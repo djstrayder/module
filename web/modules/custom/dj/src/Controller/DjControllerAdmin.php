@@ -56,13 +56,13 @@ class DjControllerAdmin extends FormBase {
       '#type' => 'tableselect',
       '#header' => $header,
       '#options' => $data,
-      '#empty' => $this->t('No cats found'),
+      '#empty' => $this->t('No records found'),
     ];
     $form['delete cats'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete'),
       '#button_type' => 'submit',
-      '#attributes' => ['onclick' => 'if(!confirm("Are you sure about that?")){return false;}'],
+      '#attributes' => ['onclick' => 'if(!confirm("Do you want to delete this record?")){return false;}'],
     ];
     return $form;
   }
