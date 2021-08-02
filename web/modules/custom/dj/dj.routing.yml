@@ -20,3 +20,24 @@ dj.EditCat:
     _title: 'Do you want to edit this entry?'
   requirements:
     _permission: 'administer site configuration'
+admin.dj.cats:
+  path: '/admin/structure/catslist'
+  defaults:
+    _form: '\Drupal\dj\Controller\DjControllerAdmin'
+    _title: 'Cats List'
+  requirements:
+    _permission: 'administer site configuration'
+admin.DeleteCat:
+  path: '/dj/admin/delete-cat/{cid}'
+  defaults:
+    _form: '\Drupal\dj\Form\DeleteCatAdmin'
+    _title: 'Are you sure about that?'
+  requirements:
+    _permission: 'administer site configuration'
+admin.EditCat:
+  path: '/dj/admin/edit-cat/{cid}'
+  defaults:
+    _form: '\Drupal\dj\Form\EditCatAdmin'
+    _title: 'You can edit your cat`s info there'
+  requirements:
+    _permission: 'administer site configuration'

@@ -1,0 +1,6 @@
+admin.dj.cats:
+  title: 'Cats list'
+  description: 'Configure the Colorbox settings.'
+  parent: system.admin_structure
+  route_name: admin.dj.cats
+  weight: 100
